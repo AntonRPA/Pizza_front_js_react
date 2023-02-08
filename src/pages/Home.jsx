@@ -1,25 +1,31 @@
-import React from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+//useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
+//useDispatch - выполняет команд (actions)
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
-import { useEffect, useState } from 'react';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
+import { SearchContext } from '../App';
+import { setActivCategory } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
 
-function Home({ searchValue }) {
+function Home() {
+  /*Redux Toolkit */
+  //Get state and dispatch
+  const { categoryId: activCategory, sort } = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+  /*Redux Toolkit */
+
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [activCategory, setActivCategory] = useState(0);
-  const [selectSort, setSelectSort] = useState({
-    name: 'популярности (убыв.)',
-    sortProperty: 'rating',
-  });
   const [currentPage, setCurrentPage] = useState(1);
+  const { searchValue } = useContext(SearchContext);
 
   //Смена активной категории
   const onClickCategory = (i) => {
-    setActivCategory(i);
+    dispatch(setActivCategory(i));
     console.log('Select category: ' + i);
   };
 
@@ -27,8 +33,8 @@ function Home({ searchValue }) {
   useEffect(() => {
     setIsLoading(true); //Включения скелетона
 
-    const sortBy = selectSort.sortProperty.replace('-', '');
-    const order = selectSort.sortProperty.includes('-') ? 'asc' : 'desc';
+    const sortBy = sort.sortProperty.replace('-', '');
+    const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const category = activCategory > 0 ? `&category=${activCategory}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
@@ -46,7 +52,7 @@ function Home({ searchValue }) {
       });
 
     window.scrollTo(0, 0); //скролл вверх при первом переходе на страницу главную
-  }, [activCategory, selectSort, searchValue, currentPage]);
+  }, [activCategory, sort, searchValue, currentPage]);
 
   // Фильтрация пицц на фронте
   const pizzas = items
@@ -57,7 +63,7 @@ function Home({ searchValue }) {
     <div className="container">
       <div className="content__top">
         <Categories activCategory={activCategory} onClickCategory={onClickCategory} />
-        <Sort selectSort={selectSort} onClickSortProps={(i) => setSelectSort(i)} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
