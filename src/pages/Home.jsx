@@ -11,7 +11,6 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { setActivCategory } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
 
-//deploy
 function Home() {
   /*Redux Toolkit */
   //Get state and dispatch
