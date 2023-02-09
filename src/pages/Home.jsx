@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
+import axios from 'axios';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -9,24 +10,28 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
-import { setActivCategory } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
+import { setActivCategory, setCurrentPage } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
 
 function Home() {
   /*Redux Toolkit */
   //Get state and dispatch
-  const { categoryId: activCategory, sort } = useSelector((state) => state.filter);
+  const { categoryId: activCategory, sort, currentPage } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   /*Redux Toolkit */
 
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
   const { searchValue } = useContext(SearchContext);
 
   //Смена активной категории
   const onClickCategory = (i) => {
     dispatch(setActivCategory(i));
     console.log('Select category: ' + i);
+  };
+
+  //Смена страницы (Пагинация)
+  const onChangePage = (number) => {
+    dispatch(setCurrentPage(number));
   };
 
   //Get json массив объектов (пицц)
@@ -38,12 +43,12 @@ function Home() {
     const category = activCategory > 0 ? `&category=${activCategory}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    fetch(
-      `https://63dcc767367aa5a7a401c039.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}${category}${search}`,
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setItems(json);
+    axios
+      .get(
+        `https://63dcc767367aa5a7a401c039.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}${category}${search}`,
+      )
+      .then((res) => {
+        setItems(res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -69,7 +74,7 @@ function Home() {
       <div className="content__items">
         {isLoading ? [...new Array(6)].map((_, index) => <Skeleton key={index} />) : pizzas}
       </div>
-      <Pagination onChangePage={(number) => setCurrentPage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={(number) => onChangePage(number)} />
     </div>
   );
 }
