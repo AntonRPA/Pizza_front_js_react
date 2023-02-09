@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
@@ -15,6 +15,9 @@ function Sort() {
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState(false);
+  const sortRef = useRef();
+
   //Выбор типа сортировки
   const onClickSort = (obj) => {
     dispatch(setSort(obj));
@@ -22,10 +25,24 @@ function Sort() {
   };
   const sortName = sort.name;
 
-  const [open, setOpen] = useState(false);
+  //Скрытие popap сортировки в случае клика в любом месте
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    window.document.body.addEventListener('click', handleClickOutside);
+
+    //Unmount действия для useEffect (чтобы не было зацикливания после переходов по страницам)
+    return () => {
+      window.document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
