@@ -1,22 +1,31 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../redux/slices/cartSlice';
 
-function PizzaBlock({ title, price, imageUrl, types, sizes }) {
-  const typesName = ['тонкое', 'традиционное'];
+const typesName = ['тонкое', 'традиционное'];
 
+function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
   const [pizzaType, setPizzaType] = useState(0);
   const [pizzaSize, setPizzaSize] = useState(0);
+  const dispatch = useDispatch();
 
-  // //Смена типа заказываемой пиццы
-  // const onClickType = (i) => {
-  //   setPizzaType(i);
-  //   console.log('onClickType: ' + i);
-  // };
+  //Получаем количество пицц добавленных в корзину
+  const addPizza = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const addPizzaCount = addPizza ? addPizza.count : '';
 
-  // //Смена размера заказываемой пиццы
-  // const onClickSize = (i) => {
-  //   setPizzaSize(i);
-  //   console.log('onClickSize: ' + i);
-  // };
+  //При клике "Добавить", добавлем объект-пиццу в reducer "cart"
+  const onAddClick = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typesName[pizzaType],
+      size: sizes[pizzaSize],
+    };
+
+    dispatch(addItem(item));
+  };
 
   return (
     <div className="pizza-block-wrapper">
@@ -50,7 +59,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₽</div>
-          <button className="button button--outline button--add">
+          <button onClick={() => onAddClick()} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -63,7 +72,7 @@ function PizzaBlock({ title, price, imageUrl, types, sizes }) {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            {addPizzaCount > 0 ? <i>{addPizzaCount}</i> : ''}
           </button>
         </div>
       </div>
