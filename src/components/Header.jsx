@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoSvg from '../assets/img/pizza-logo.svg';
 import Search from './Search';
+import { indexUrl } from '../App';
 
 function Header() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function Header() {
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link to={indexUrl}>
           <div className="header__logo">
             <img width="38" src={LogoSvg} alt="Pizza logo" />
             <div>
