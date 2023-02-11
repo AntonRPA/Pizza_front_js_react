@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
 import { clearCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty';
+import { indexUrl } from '../App';
 
 function Cart() {
   const dispatch = useDispatch();
@@ -101,7 +102,7 @@ function Cart() {
               </span>
             </div>
             <div className="cart__bottom-buttons">
-              <Link to="/" className="button button--outline button--add go-back-btn">
+              <Link to={indexUrl} className="button button--outline button--add go-back-btn">
                 <svg
                   width="8"
                   height="14"

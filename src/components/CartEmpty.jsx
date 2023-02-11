@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { indexUrl } from '../App';
 import emptyCartImg from '../assets/img/empty-cart.png';
 
 function CartEmpty() {
@@ -15,7 +16,7 @@ function CartEmpty() {
               Для того, чтобы заказать пиццу, перейди на главную страницу.
             </p>
             <img src={emptyCartImg} alt="Empty cart" />
-            <Link to="/" className="button button--black">
+            <Link to={indexUrl} className="button button--black">
               <span>Вернуться назад</span>
             </Link>
           </div>

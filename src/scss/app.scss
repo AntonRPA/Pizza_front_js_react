@@ -24,6 +24,23 @@ body {
 .content {
   padding: 40px 0;
 
+  &__error-info {
+    grid-template-columns: repeat(1, 1fr);
+    margin: 100px auto;
+    width: 500px;
+    text-align: center;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+  }
+
   &__title {
     font-size: 38px;
     font-weight: 800;
@@ -175,6 +192,12 @@ body {
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
+
+    //добавил
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: center;
+    }
 
     &-img {
       display: flex;
