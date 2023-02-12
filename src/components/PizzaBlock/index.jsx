@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
+import { addItem, selectorCartById } from '../../redux/slices/cartSlice';
 
 const typesName = ['тонкое', 'традиционное'];
 
@@ -10,7 +10,7 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
   const dispatch = useDispatch();
 
   //Получаем количество пицц добавленных в корзину
-  const addPizza = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const addPizza = useSelector(selectorCartById(id));
   const addPizzaCount = addPizza ? addPizza.count : '';
 
   //При клике "Добавить", добавлем объект-пиццу в reducer "cart"

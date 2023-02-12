@@ -32,8 +32,13 @@ const pizzaSlice = createSlice({
     },
     [fetchPizzas.fulfilled]: (state, action) => {
       console.log(state, 'Пиццы получены');
-      state.items = action.payload;
-      state.status = 'success';
+
+      if (action.payload.length > 0) {
+        state.items = action.payload;
+        state.status = 'success';
+      } else {
+        state.status = 'not_found';
+      }
     },
     [fetchPizzas.rejected]: (state, action) => {
       console.log(state, 'Ошибка при получение items');
@@ -42,6 +47,8 @@ const pizzaSlice = createSlice({
     },
   },
 });
+
+export const selectPizzaData = (state) => state.pizza;
 
 export const { setItems } = pizzaSlice.actions;
 export default pizzaSlice.reducer;

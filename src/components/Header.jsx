@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import LogoSvg from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 import { indexUrl } from '../App';
+import { selectorCart } from '../redux/slices/cartSlice';
 
 function Header() {
-  const dispatch = useDispatch();
-  const { totalPrice, items, sumCount } = useSelector((state) => state.cart);
+  const { totalPrice, items, sumCount } = useSelector(selectorCart);
 
   return (
     <div className="header">

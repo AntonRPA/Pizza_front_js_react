@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
@@ -10,24 +10,27 @@ import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { SearchContext } from '../App';
-import { setActivCategory, setCurrentPage, setFilter } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
+import {
+  selectFilter,
+  setActivCategory,
+  setCurrentPage,
+  setFilter,
+} from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
 import { list } from '../components/Sort';
-import { fetchPizzas, setItems } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 function Home() {
   /*Redux Toolkit */
   //Get state and dispatch
-  const { categoryId: activCategory, sort, currentPage } = useSelector((state) => state.filter);
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categoryId: activCategory, sort, currentPage } = useSelector(selectFilter);
+  const { items, status } = useSelector(selectPizzaData);
+  const { searchValue } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   /*Redux Toolkit */
 
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-
-  const { searchValue } = useContext(SearchContext);
 
   //Смена активной категории
   const onClickCategory = (i) => {
@@ -106,6 +109,11 @@ function Home() {
           <div className="content__error-info">
             <h2>Произошла ошибка 😕</h2>
             <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
+          </div>
+        ) : status === 'not_found' ? (
+          <div className="content__error-info">
+            <h2>Пицц не найдено 😕</h2>
+            <p>К сожалению, не удалось найти пиццы. Попробуйте другой запрос</p>
           </div>
         ) : status === 'loading' ? (
           [...new Array(6)].map((_, index) => <Skeleton key={index} />)

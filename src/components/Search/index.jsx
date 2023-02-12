@@ -1,17 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { SearchContext } from '../../App';
+import React, { useState } from 'react';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
+import { setSearchValue } from '../../redux/slices/filterSlice';
+import { useDispatch } from 'react-redux';
 
 function Search() {
   const [value, setValue] = useState('');
-  const { setSearchValue } = useContext(SearchContext);
   const inputRef = React.useRef(); //useRef - используется для взаимодействия с DOM элементами
+  const dispatch = useDispatch();
 
   //Очистка поискового input
   const onClickClear = () => {
-    setSearchValue('');
+    dispatch(setSearchValue(''));
     setValue('');
     inputRef.current.focus();
   };
@@ -19,7 +20,7 @@ function Search() {
   /***Отложенный поиск(get запрос к бэкэнду) с паузой, после ввода слова */
   const updateSearchValue = React.useCallback(
     debounce((str) => {
-      setSearchValue(str);
+      dispatch(setSearchValue(str));
     }, 500),
     [],
   );
