@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
 import qs from 'qs';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -93,9 +93,13 @@ function Home() {
   }, [activCategory, sort, searchValue, currentPage]);
 
   // Фильтрация пицц на фронте
-  const pizzas = items
-    // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+  // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
+  const pizzas = items.map((obj) => (
+    // Перебираем все пиццы для рендера на страницы и Передаем id для загрузски страницы FullPizza.jsx
+    <Link to={`/pizza/${obj.id}`} key={obj.id}>
+      <PizzaBlock {...obj} />
+    </Link>
+  ));
 
   return (
     <div className="container">
