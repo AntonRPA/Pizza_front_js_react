@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
 import qs from 'qs';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -16,15 +16,14 @@ import {
   setCurrentPage,
   setFilter,
 } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
-import { list } from '../components/Sort';
+import { sortList } from '../components/Sort';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
-function Home() {
+const Home: React.FC = () => {
   /*Redux Toolkit */
   //Get state and dispatch
-  const { categoryId: activCategory, sort, currentPage } = useSelector(selectFilter);
+  const { categoryId: activCategory, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
-  const { searchValue } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
   /*Redux Toolkit */
 
@@ -33,13 +32,13 @@ function Home() {
   const isMounted = useRef(false);
 
   //Смена активной категории
-  const onClickCategory = (i) => {
-    dispatch(setActivCategory(i));
+  const onClickCategory = (idx: number) => {
+    dispatch(setActivCategory(idx));
   };
 
   //Смена страницы (Пагинация)
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -51,7 +50,10 @@ function Home() {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     //Get запрос на получение пицц от бэкенда
-    dispatch(fetchPizzas({ sortBy, order, category, search, currentPage }));
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({ sortBy, order, category, search, currentPage }),
+    );
   };
 
   //Если изменили параметры и был первый рендер
@@ -73,7 +75,7 @@ function Home() {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
 
       dispatch(setFilter({ ...params, sort }));
       isSearch.current = true;
@@ -94,12 +96,7 @@ function Home() {
 
   // Фильтрация пицц на фронте
   // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
-  const pizzas = items.map((obj) => (
-    // Перебираем все пиццы для рендера на страницы и Передаем id для загрузски страницы FullPizza.jsx
-    <Link to={`/pizza/${obj.id}`} key={obj.id}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ));
+  const pizzas = items.map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
 
   return (
     <div className="container">
@@ -125,9 +122,9 @@ function Home() {
           pizzas
         )}
       </div>
-      <Pagination currentPage={currentPage} onChangePage={(number) => onChangePage(number)} />
+      <Pagination currentPage={currentPage} onChangePage={(page: number) => onChangePage(page)} />
     </div>
   );
-}
+};
 
 export default Home;

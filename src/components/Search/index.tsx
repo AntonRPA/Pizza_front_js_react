@@ -5,26 +5,26 @@ import styles from './Search.module.scss';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 import { useDispatch } from 'react-redux';
 
-function Search() {
-  const [value, setValue] = useState('');
-  const inputRef = React.useRef(); //useRef - используется для взаимодействия с DOM элементами
+const Search: React.FC = () => {
+  const [value, setValue] = useState<string>('');
+  const inputRef = React.useRef<HTMLInputElement>(null); //useRef - используется для взаимодействия с DOM элементами
   const dispatch = useDispatch();
 
   //Очистка поискового input
   const onClickClear = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current.focus();
+    inputRef.current?.focus(); //"?" означает - Если есть current, то выполни focus
   };
 
   /***Отложенный поиск(get запрос к бэкэнду) с паузой, после ввода слова */
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 500),
     [],
   );
-  const onChangeInput = (event) => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
@@ -91,6 +91,6 @@ function Search() {
       )}
     </div>
   );
-}
+};
 
 export default Search;

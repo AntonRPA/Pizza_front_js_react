@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectorSort, setSort } from '../redux/slices/filterSlice';
 
-export const list = [
+type sortItem = { name: string; sortProperty: string };
+
+export const sortList: sortItem[] = [
   { name: 'популярности (убыв.)', sortProperty: 'rating' },
   { name: 'популярности (возвр.)', sortProperty: '-rating' },
   { name: 'цене (убыв.)', sortProperty: 'price' },
@@ -15,11 +17,11 @@ function Sort() {
   const sort = useSelector(selectorSort);
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState(false);
-  const sortRef = useRef();
+  const [open, setOpen] = useState<boolean>(false);
+  const sortRef = useRef<HTMLDivElement>(null); //useRef первое значение не должен содержать undefined. Поэтому передаем null
 
   //Выбор типа сортировки
-  const onClickSort = (obj) => {
+  const onClickSort = (obj: sortItem) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
@@ -27,7 +29,7 @@ function Sort() {
 
   //Скрытие popap сортировки в случае клика в любом месте
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
@@ -61,7 +63,7 @@ function Sort() {
       {open && (
         <div className="sort__popup">
           <ul>
-            {list.map((obj, index) => (
+            {sortList.map((obj, index) => (
               <li
                 key={obj.name}
                 onClick={() => onClickSort(obj)}

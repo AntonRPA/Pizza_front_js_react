@@ -1,12 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addItem, selectorCartById } from '../../redux/slices/cartSlice';
 
 const typesName = ['тонкое', 'традиционное'];
 
-function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
-  const [pizzaType, setPizzaType] = useState(0);
-  const [pizzaSize, setPizzaSize] = useState(0);
+//Типизация props
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  types: number[];
+  sizes: number[];
+  rating: number;
+};
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
+  const [pizzaType, setPizzaType] = useState<number>(0);
+  const [pizzaSize, setPizzaSize] = useState<number>(0);
   const dispatch = useDispatch();
 
   //Получаем количество пицц добавленных в корзину
@@ -30,8 +42,12 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-        <h4 className="pizza-block__title">{title}</h4>
+        {/* Передаем id для загрузски страницы FullPizza.jsx */}
+        <Link to={`/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+          <h4 className="pizza-block__title">{title}</h4>
+        </Link>
+
         <div className="pizza-block__selector">
           {/* Тип теста */}
           <ul>
@@ -78,6 +94,6 @@ function PizzaBlock({ id, title, price, imageUrl, types, sizes }) {
       </div>
     </div>
   );
-}
+};
 
 export default PizzaBlock;

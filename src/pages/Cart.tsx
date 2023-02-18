@@ -4,8 +4,9 @@ import CartItem from '../components/CartItem';
 import { clearCart, selectorCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/CartEmpty';
 import { indexUrl } from '../App';
+import React from 'react';
 
-function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch();
   const { items, sumCount, totalPrice } = useSelector(selectorCart);
 
@@ -86,7 +87,7 @@ function Cart() {
             </div>
           </div>
           <div className="content__items">
-            {items.map((obj) => (
+            {items.map((obj: any) => (
               <CartItem key={obj.id} {...obj} />
             ))}
           </div>
@@ -130,6 +131,6 @@ function Cart() {
   } else {
     return <CartEmpty />;
   }
-}
+};
 
 export default Cart;

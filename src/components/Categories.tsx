@@ -1,4 +1,11 @@
-function Categories({ activCategory, onClickCategory }) {
+import React from 'react';
+
+type CategoriesProps = {
+  activCategory: number;
+  onClickCategory: any;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ activCategory, onClickCategory }) => {
   const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
@@ -17,6 +24,6 @@ function Categories({ activCategory, onClickCategory }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

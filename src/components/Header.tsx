@@ -6,7 +6,7 @@ import { indexUrl } from '../App';
 import { selectorCart } from '../redux/slices/cartSlice';
 
 function Header() {
-  const { totalPrice, items, sumCount } = useSelector(selectorCart);
+  const { totalPrice, sumCount } = useSelector(selectorCart);
 
   const location = useLocation();
   console.log(location);

@@ -3,9 +3,13 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { indexUrl } from '../App';
 
-function FullPizza() {
+const FullPizza: React.FunctionComponent = () => {
   const { id } = useParams();
-  const [pizza, setPizza] = useState();
+  const [pizza, setPizza] = useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +41,6 @@ function FullPizza() {
       <h4>{pizza.price} ₽</h4>
     </div>
   );
-}
+};
 
 export default FullPizza;
