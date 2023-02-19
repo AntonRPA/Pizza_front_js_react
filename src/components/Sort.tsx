@@ -4,6 +4,10 @@ import { selectorSort, setSort } from '../redux/slices/filterSlice';
 
 type sortItem = { name: string; sortProperty: string };
 
+type PopupClick = MouseEvent & {
+  composedPath: () => Node[];
+};
+
 export const sortList: sortItem[] = [
   { name: 'популярности (убыв.)', sortProperty: 'rating' },
   { name: 'популярности (возвр.)', sortProperty: '-rating' },
@@ -17,7 +21,7 @@ function Sort() {
   const sort = useSelector(selectorSort);
   const dispatch = useDispatch();
 
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null); //useRef первое значение не должен содержать undefined. Поэтому передаем null
 
   //Выбор типа сортировки
@@ -29,8 +33,9 @@ function Sort() {
 
   //Скрытие popap сортировки в случае клика в любом месте
   useEffect(() => {
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as PopupClick;
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };

@@ -122,7 +122,7 @@ const Home: React.FC = () => {
           pizzas
         )}
       </div>
-      <Pagination currentPage={currentPage} onChangePage={(page: number) => onChangePage(page)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };
