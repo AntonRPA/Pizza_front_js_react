@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
 import qs from 'qs';
@@ -17,14 +17,15 @@ import {
   setFilter,
 } from '../redux/slices/filterSlice'; //Slice actions for redux toolkit
 import { sortList } from '../components/Sort';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizzaData, TSearchPizzas } from '../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
   /*Redux Toolkit */
   //Get state and dispatch
   const { categoryId: activCategory, sort, currentPage, searchValue } = useSelector(selectFilter);
   const { items, status } = useSelector(selectPizzaData);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   /*Redux Toolkit */
 
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const Home: React.FC = () => {
     //Get запрос на получение пицц от бэкенда
     dispatch(
       // @ts-ignore
-      fetchPizzas({ sortBy, order, category, search, currentPage }),
+      fetchPizzas({ sortBy, order, category, search, currentPage: String(currentPage) }),
     );
   };
 
@@ -74,10 +75,17 @@ const Home: React.FC = () => {
   //Загрузка страницы с учетом фильтрации, распаршенной из адресной строки
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
-      const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
+      const params = qs.parse(window.location.search.substring(1)) as unknown as TSearchPizzas;
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
 
-      dispatch(setFilter({ ...params, sort }));
+      dispatch(
+        setFilter({
+          categoryId: Number(params.category), //Типизируем к
+          searchValue: params.search,
+          currentPage: Number(params.currentPage),
+          sort: sort || sortList[0],
+        }),
+      );
       isSearch.current = true;
     }
   }, []);

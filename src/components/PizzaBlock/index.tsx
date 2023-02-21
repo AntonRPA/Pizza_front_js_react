@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addItem, selectorCartById } from '../../redux/slices/cartSlice';
+import { addItem, TCartItem, selectorCartById } from '../../redux/slices/cartSlice';
 
 const typesName = ['тонкое', 'традиционное'];
 
 //Типизация props
-type PizzaBlockProps = {
-  id: number;
+type TPizzaBlockProps = {
+  id: string;
   title: string;
   price: number;
   imageUrl: string;
@@ -16,7 +16,7 @@ type PizzaBlockProps = {
   rating: number;
 };
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
+const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
   const [pizzaType, setPizzaType] = useState<number>(0);
   const [pizzaSize, setPizzaSize] = useState<number>(0);
   const dispatch = useDispatch();
@@ -27,15 +27,15 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, typ
 
   //При клике "Добавить", добавлем объект-пиццу в reducer "cart"
   const onAddClick = () => {
-    const item = {
+    const item: TCartItem = {
       id,
       title,
       price,
       imageUrl,
       type: typesName[pizzaType],
       size: sizes[pizzaSize],
+      count: 0,
     };
-
     dispatch(addItem(item));
   };
 

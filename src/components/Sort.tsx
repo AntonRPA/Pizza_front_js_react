@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectorSort, setSort } from '../redux/slices/filterSlice';
+import { selectorSort, setSort, SortPropertyEnum } from '../redux/slices/filterSlice';
 
-type sortItem = { name: string; sortProperty: string };
+type TsortItem = { name: string; sortProperty: SortPropertyEnum };
 
-type PopupClick = MouseEvent & {
+type TPopupClick = MouseEvent & {
   composedPath: () => Node[];
 };
 
-export const sortList: sortItem[] = [
-  { name: 'популярности (убыв.)', sortProperty: 'rating' },
-  { name: 'популярности (возвр.)', sortProperty: '-rating' },
-  { name: 'цене (убыв.)', sortProperty: 'price' },
-  { name: 'цене (возвр.)', sortProperty: '-price' },
-  { name: 'алфавиту (убыв.)', sortProperty: 'title' },
-  { name: 'алфавиту (возвр.)', sortProperty: '-title' },
+export const sortList: TsortItem[] = [
+  { name: 'популярности (убыв.)', sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: 'популярности (возвр.)', sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: 'цене (убыв.)', sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: 'цене (возвр.)', sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: 'алфавиту (убыв.)', sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: 'алфавиту (возвр.)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 function Sort() {
@@ -25,7 +25,7 @@ function Sort() {
   const sortRef = useRef<HTMLDivElement>(null); //useRef первое значение не должен содержать undefined. Поэтому передаем null
 
   //Выбор типа сортировки
-  const onClickSort = (obj: sortItem) => {
+  const onClickSort = (obj: TsortItem) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
@@ -34,7 +34,7 @@ function Sort() {
   //Скрытие popap сортировки в случае клика в любом месте
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const _event = event as PopupClick;
+      const _event = event as TPopupClick;
       if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
