@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectorSort, setSort, SortPropertyEnum } from '../redux/slices/filterSlice';
+import { useDispatch } from 'react-redux';
+import useWhyDidYouUpdate from 'ahooks/lib/useWhyDidYouUpdate';
+import { setSort, SortPropertyEnum, TSort } from '../redux/slices/filterSlice';
 
 type TsortItem = { name: string; sortProperty: SortPropertyEnum };
 
 type TPopupClick = MouseEvent & {
   composedPath: () => Node[];
+};
+
+type TSortPopup = {
+  sort: TSort;
 };
 
 export const sortList: TsortItem[] = [
@@ -17,8 +22,9 @@ export const sortList: TsortItem[] = [
   { name: 'алфавиту (возвр.)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-function Sort() {
-  const sort = useSelector(selectorSort);
+const Sort: React.FC<TSortPopup> = React.memo(({ sort }) => {
+  // useWhyDidYouUpdate('Sort', { sort });
+
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -29,6 +35,7 @@ function Sort() {
     dispatch(setSort(obj));
     setOpen(false);
   };
+
   const sortName = sort.name;
 
   //Скрытие popap сортировки в случае клика в любом месте
@@ -81,6 +88,6 @@ function Sort() {
       )}
     </div>
   );
-}
+});
 
 export default Sort;

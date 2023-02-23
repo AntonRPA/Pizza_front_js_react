@@ -10,7 +10,7 @@ export enum SortPropertyEnum {
   TITLE_ASC = '-title',
 }
 
-type TSort = {
+export type TSort = {
   name: string;
   sortProperty: SortPropertyEnum;
 };

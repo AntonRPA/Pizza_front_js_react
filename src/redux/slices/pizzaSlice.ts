@@ -59,14 +59,11 @@ const pizzaSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state) => {
-      console.log('Идет отправка');
       state.status = Status.LOADING;
       state.items = [];
     });
 
     builder.addCase(fetchPizzas.fulfilled, (state, action) => {
-      console.log(state, 'Пиццы получены');
-
       if (action.payload.length > 0) {
         state.items = action.payload;
         state.status = Status.SUCCESS;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 //useSelector - вытаскивает данные из хранилища (похож на слушатель еще)
 //useDispatch - выполняет команд (actions)
@@ -33,9 +33,9 @@ const Home: React.FC = () => {
   const isMounted = useRef(false);
 
   //Смена активной категории
-  const onClickCategory = (idx: number) => {
+  const onClickCategory = useCallback((idx: number) => {
     dispatch(setActivCategory(idx));
-  };
+  }, []);
 
   //Смена страницы (Пагинация)
   const onChangePage = (page: number) => {
@@ -110,7 +110,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories activCategory={activCategory} onClickCategory={onClickCategory} />
-        <Sort />
+        <Sort sort={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
