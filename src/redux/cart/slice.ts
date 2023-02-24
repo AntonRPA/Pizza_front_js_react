@@ -1,22 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-
-export type TCartItem = {
-  id: string;
-  title: string;
-  price: number;
-  imageUrl: string;
-  type: string;
-  size: number;
-  count: number;
-  delete_all?: boolean; //Опциональное свойство
-};
-
-interface ICartSliceState {
-  totalPrice: number;
-  sumCount: number;
-  items: TCartItem[];
-}
+import { ICartSliceState, TCartItem } from './types';
 
 const initialState: ICartSliceState = {
   totalPrice: 0,
@@ -69,12 +52,14 @@ const cartSlice = createSlice({
       //Вызов пересчета общей суммы и количества
       mathState(state);
     },
+    //Добавление всех пицц из LocalStorage в корзину
+    addItemsObj(state, action: PayloadAction<TCartItem[]>) {
+      state.items = action.payload;
+      //Вызов пересчета общей суммы и количества
+      mathState(state);
+    },
   },
 });
 
-export const selectorCart = (state: RootState) => state.cart;
-export const selectorCartById = (id: string) => (state: RootState) =>
-  state.cart.items.find((obj) => obj.id === id);
-
-export const { addItem, removeItem, clearCart } = cartSlice.actions;
+export const { addItem, removeItem, clearCart, addItemsObj } = cartSlice.actions;
 export default cartSlice.reducer;

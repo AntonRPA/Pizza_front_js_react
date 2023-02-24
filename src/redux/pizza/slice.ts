@@ -1,48 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { RootState } from '../store';
-
-export type TSearchPizzas = {
-  sortBy: string;
-  order: string;
-  category: string;
-  search: string;
-  currentPage: string;
-};
-
-export const fetchPizzas = createAsyncThunk<TPizza[], TSearchPizzas>(
-  'pizza/fetchPizzasStatus',
-  async ({ sortBy, order, category, search, currentPage }) => {
-    const { data } = await axios.get<TPizza[]>(
-      `https://63dcc767367aa5a7a401c039.mockapi.io/items?page=${currentPage}&limit=4&sortBy=${sortBy}&order=${order}${category}${search}`,
-    );
-
-    return data;
-  },
-);
-
-type TPizza = {
-  id: number;
-  title: string;
-  price: number;
-  imageUrl: string;
-  types: number[];
-  sizes: number[];
-  rating: number;
-};
-
-// enum - можно использовать в TypeScript. Объект нельзяы
-export enum Status {
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error',
-  NOT_FOUND = 'not_found',
-}
-
-interface PizzaSliceState {
-  items: TPizza[];
-  status: Status; //loading | success | error
-}
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchPizzas } from './asyncActions';
+import { PizzaSliceState, Status, TPizza } from './types';
 
 const initialState: PizzaSliceState = {
   items: [],
@@ -103,8 +61,6 @@ const pizzaSlice = createSlice({
   //   },
   // },
 });
-
-export const selectPizzaData = (state: RootState) => state.pizza;
 
 export const { setItems } = pizzaSlice.actions;
 export default pizzaSlice.reducer;

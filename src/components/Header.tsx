@@ -1,12 +1,32 @@
+import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoSvg from '../assets/img/pizza-logo.svg';
 import Search from './Search';
 import { indexUrl } from '../App';
-import { selectorCart } from '../redux/slices/cartSlice';
+
+import { addItemsObj } from '../redux/cart/slice';
+import { selectorCart } from '../redux/cart/selectors';
+
+import { useAppDispatch } from '../redux/store';
+import { getCartLocalStorage } from '../utils/getCartLocalStorage';
 
 function Header() {
-  const { totalPrice, sumCount } = useSelector(selectorCart);
+  const { totalPrice, sumCount, items } = useSelector(selectorCart);
+  const dispatch = useAppDispatch();
+  const isMounted = useRef(false);
+
+  //Сохранение и загрузка пицц из LocalStorage
+  useEffect(() => {
+    if (isMounted.current) {
+      //2 и следующие рендеры. Сохранение массива items
+      window.localStorage.setItem('cart', JSON.stringify(items));
+    } else {
+      // 1 рендер. Передаем массив объектов пицц из LocalStorage
+      dispatch(addItemsObj(getCartLocalStorage()));
+    }
+    isMounted.current = true;
+  }, [items]);
 
   const location = useLocation();
   console.log(location);

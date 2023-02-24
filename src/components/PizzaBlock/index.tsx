@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addItem, TCartItem, selectorCartById } from '../../redux/slices/cartSlice';
+
+import { addItem } from '../../redux/cart/slice';
+import { TCartItem } from '../../redux/cart/types';
+import { selectorCartById } from '../../redux/cart/selectors';
+
+import { useAppDispatch } from '../../redux/store';
 
 const typesName = ['тонкое', 'традиционное'];
 
@@ -19,7 +24,7 @@ type TPizzaBlockProps = {
 const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
   const [pizzaType, setPizzaType] = useState<number>(0);
   const [pizzaSize, setPizzaSize] = useState<number>(0);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   //Получаем количество пицц добавленных в корзину
   const addPizza = useSelector(selectorCartById(id));
