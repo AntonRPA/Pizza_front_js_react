@@ -7,6 +7,7 @@ import { TCartItem } from '../../redux/cart/types';
 import { selectorCartById } from '../../redux/cart/selectors';
 
 import { useAppDispatch } from '../../redux/store';
+import { indexUrl } from '../../App';
 
 const typesName = ['тонкое', 'традиционное'];
 
@@ -58,7 +59,7 @@ export const PizzaBlock: React.FC<TPizzaBlockProps> = ({
       <div className="pizza-block">
         {/* Передаем id для загрузски страницы FullPizza.jsx */}
         {fullLoad && (
-          <Link to={`/pizza/${id}`}>
+          <Link to={`${indexUrl}pizza/${id}`}>
             <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
             <h4 className="pizza-block__title">{title}</h4>
           </Link>
