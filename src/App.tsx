@@ -20,9 +20,9 @@ function App() {
     <Routes>
       <Route path={indexUrl} element={<MainLayout />}>
         <Route path="" element={<Home />} />
-        <Route path="cart" element={<Cart />} />
+        <Route path={indexUrl + 'cart'} element={<Cart />} />
         <Route
-          path="pizza/:id"
+          path={indexUrl + 'pizza/:id'}
           element={
             <Suspense fallback={<div>Загрузка...</div>}>
               <FullPizza />
