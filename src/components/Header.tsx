@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LogoSvg from '../assets/img/pizza-logo.svg';
-import Search from './Search';
+import { Search } from '../components';
 import { indexUrl } from '../App';
 
 import { addItemsObj } from '../redux/cart/slice';
@@ -11,7 +11,7 @@ import { selectorCart } from '../redux/cart/selectors';
 import { useAppDispatch } from '../redux/store';
 import { getCartLocalStorage } from '../utils/getCartLocalStorage';
 
-function Header() {
+export const Header: React.FC = () => {
   const { totalPrice, sumCount, items } = useSelector(selectorCart);
   const dispatch = useAppDispatch();
   const isMounted = useRef(false);
@@ -85,6 +85,4 @@ function Header() {
       </div>
     </div>
   );
-}
-
-export default Header;
+};

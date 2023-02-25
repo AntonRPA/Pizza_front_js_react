@@ -23,7 +23,7 @@ export const sortList: TsortItem[] = [
   { name: 'алфавиту (возвр.)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-const Sort: React.FC<TSortPopup> = React.memo(({ sort }) => {
+export const Sort: React.FC<TSortPopup> = React.memo(({ sort }) => {
   // useWhyDidYouUpdate('Sort', { sort });
 
   const dispatch = useDispatch();
@@ -90,5 +90,3 @@ const Sort: React.FC<TSortPopup> = React.memo(({ sort }) => {
     </div>
   );
 });
-
-export default Sort;

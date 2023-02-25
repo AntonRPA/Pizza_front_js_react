@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../redux/store';
 const typesName = ['тонкое', 'традиционное'];
 
 //Типизация props
-type TPizzaBlockProps = {
+export type TPizzaBlockProps = {
   id: string;
   title: string;
   price: number;
@@ -19,9 +19,18 @@ type TPizzaBlockProps = {
   types: number[];
   sizes: number[];
   rating: number;
+  fullLoad?: boolean; //Полностью загружать компонент, или частично
 };
 
-const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, types, sizes }) => {
+export const PizzaBlock: React.FC<TPizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  types,
+  sizes,
+  fullLoad = true,
+}) => {
   const [pizzaType, setPizzaType] = useState<number>(0);
   const [pizzaSize, setPizzaSize] = useState<number>(0);
   const dispatch = useAppDispatch();
@@ -48,10 +57,12 @@ const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, ty
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
         {/* Передаем id для загрузски страницы FullPizza.jsx */}
-        <Link to={`/pizza/${id}`}>
-          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
-          <h4 className="pizza-block__title">{title}</h4>
-        </Link>
+        {fullLoad && (
+          <Link to={`/pizza/${id}`}>
+            <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+            <h4 className="pizza-block__title">{title}</h4>
+          </Link>
+        )}
 
         <div className="pizza-block__selector">
           {/* Тип теста */}
@@ -79,7 +90,7 @@ const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, ty
           </ul>
         </div>
         <div className="pizza-block__bottom">
-          <div className="pizza-block__price">от {price} ₽</div>
+          <div className="pizza-block__price">{price} ₽</div>
           <button onClick={() => onAddClick()} className="button button--outline button--add">
             <svg
               width="12"
@@ -100,5 +111,3 @@ const PizzaBlock: React.FC<TPizzaBlockProps> = ({ id, title, price, imageUrl, ty
     </div>
   );
 };
-
-export default PizzaBlock;

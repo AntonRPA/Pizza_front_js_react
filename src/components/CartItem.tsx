@@ -15,7 +15,15 @@ export type TCartItemProps = {
   size: number;
 };
 
-const CartItem: React.FC<TCartItemProps> = ({ id, title, price, count, imageUrl, type, size }) => {
+export const CartItem: React.FC<TCartItemProps> = ({
+  id,
+  title,
+  price,
+  count,
+  imageUrl,
+  type,
+  size,
+}) => {
   const dispatch = useDispatch();
   const onClickPlus = () => dispatch(addItem({ id } as TCartItem));
   const onClickMinus = () => dispatch(removeItem({ id } as TCartItem));
@@ -93,5 +101,3 @@ const CartItem: React.FC<TCartItemProps> = ({ id, title, price, count, imageUrl,
     </div>
   );
 };
-
-export default CartItem;

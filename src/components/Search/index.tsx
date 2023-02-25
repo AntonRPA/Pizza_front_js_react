@@ -5,7 +5,7 @@ import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/filter/slice';
 
-const Search: React.FC = () => {
+export const Search: React.FC = () => {
   const [value, setValue] = useState<string>('');
   const inputRef = React.useRef<HTMLInputElement>(null); //useRef - используется для взаимодействия с DOM элементами
   const dispatch = useDispatch();
@@ -92,5 +92,3 @@ const Search: React.FC = () => {
     </div>
   );
 };
-
-export default Search;
