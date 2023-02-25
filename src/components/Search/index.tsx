@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSearchValue } from '../../redux/filter/slice';
+// import { selectFilter } from '../../redux/filter/selectors';
 
 export const Search: React.FC = () => {
+  // const { searchValue } = useSelector(selectFilter);
   const [value, setValue] = useState<string>('');
   const inputRef = React.useRef<HTMLInputElement>(null); //useRef - используется для взаимодействия с DOM элементами
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export const Search: React.FC = () => {
     }, 500),
     [],
   );
+
   const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);

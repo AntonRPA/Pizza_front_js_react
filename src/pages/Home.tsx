@@ -14,6 +14,7 @@ import { selectPizzaData } from '../redux/pizza/selectors';
 import { setActivCategory, setCurrentPage, setFilter } from '../redux/filter/slice';
 import { TSearchPizzas } from '../redux/pizza/types';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { IFilterSliceState } from '../redux/filter/types';
 
 const Home: React.FC = () => {
   /*Redux Toolkit */
@@ -60,23 +61,26 @@ const Home: React.FC = () => {
         sortProperty: sort.sortProperty,
         categoryId: activCategory,
         currentPage,
+        searchValue: searchValue,
       });
       navigate(`?${queryString}`);
     }
     isMounted.current = true;
-  }, [activCategory, sort, currentPage]);
+  }, [activCategory, sort, currentPage, searchValue]);
 
   //Если был первый рендер, то проверяем URL-параметры и сохранем в редаксе
   //Загрузка страницы с учетом фильтрации, распаршенной из адресной строки
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1)) as unknown as TSearchPizzas;
-      const sort = sortList.find((obj) => obj.sortProperty === params.sortBy);
+      const params = qs.parse(window.location.search.substring(1)) as unknown as IFilterSliceState;
+      console.log(params);
+      // @ts-ignore
+      const sort = sortList.find((obj) => obj.sortProperty === params.sortProperty);
 
       dispatch(
         setFilter({
-          categoryId: Number(params.category), //Типизируем к
-          searchValue: params.search,
+          categoryId: Number(params.categoryId), //Типизируем к
+          searchValue: params.searchValue,
           currentPage: Number(params.currentPage),
           sort: sort || sortList[0],
         }),
