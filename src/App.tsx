@@ -21,7 +21,7 @@ function App() {
       <Route path={indexUrl} element={<MainLayout />}>
         <Route path="" element={<Home />} />
         <Route
-          path="cart"
+          path="/cart"
           element={
             <Suspense fallback={<div>Загрузка...</div>}>
               <Cart />
@@ -29,7 +29,7 @@ function App() {
           }
         />
         <Route
-          path="pizza/:id"
+          path="/pizza/:id"
           element={
             <Suspense fallback={<div>Загрузка...</div>}>
               <FullPizza />

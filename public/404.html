@@ -1,3 +1,4 @@
+<!-- Fix route for GitHub -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -33,12 +34,13 @@
             .split('/')
             .slice(0, 1 + segmentCount)
             .join('/') +
-          '/?p=/' +
+          '/?/' +
           l.pathname.slice(1).split('/').slice(segmentCount).join('/').replace(/&/g, '~and~') +
-          (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
           l.hash,
       );
     </script>
   </head>
   <body></body>
 </html>
+<!-- Fix route for GitHub -->

@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSearchValue } from '../../redux/filter/slice';
-// import { selectFilter } from '../../redux/filter/selectors';
+import { selectFilter } from '../../redux/filter/selectors';
 
 export const Search: React.FC = () => {
-  // const { searchValue } = useSelector(selectFilter);
+  const { searchValue, categoryId } = useSelector(selectFilter);
   const [value, setValue] = useState<string>('');
   const inputRef = React.useRef<HTMLInputElement>(null); //useRef - используется для взаимодействия с DOM элементами
   const dispatch = useDispatch();
@@ -32,6 +32,16 @@ export const Search: React.FC = () => {
     updateSearchValue(event.target.value);
   };
   /***Отложенный поиск(get запрос к бэкэнду) с паузой, после ввода слова */
+
+  //FIX: Отображение в поле input значения searchValue. Для случая когда переходим по прямой ссылке с поисковым значением
+  useEffect(() => {
+    setValue(searchValue);
+  }, [searchValue]);
+
+  //Очистка поля поиска в случае смены категории
+  useEffect(() => {
+    onClickClear();
+  }, [categoryId]);
 
   return (
     <div className={styles.root}>
