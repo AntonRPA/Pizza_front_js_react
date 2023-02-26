@@ -13,7 +13,7 @@ const Cart = Loadable({
   loading: () => <div>Загрузка корзины...</div>,
 });
 
-export const indexUrl = '/Pizza_front_js_react/';
+export const indexUrl = '/';
 
 function App() {
   return (
