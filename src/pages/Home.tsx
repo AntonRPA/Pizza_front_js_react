@@ -12,7 +12,6 @@ import { useAppDispatch } from '../redux/store';
 import { selectFilter } from '../redux/filter/selectors';
 import { selectPizzaData } from '../redux/pizza/selectors';
 import { setActivCategory, setCurrentPage, setFilter } from '../redux/filter/slice';
-import { TSearchPizzas } from '../redux/pizza/types';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 import { IFilterSliceState } from '../redux/filter/types';
 
