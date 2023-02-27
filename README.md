@@ -1,3 +1,7 @@
+# Deployed project:
+
+https://antonrpa.github.io/Pizza_front_js_react/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

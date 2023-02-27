@@ -38,8 +38,8 @@ export const Header: React.FC = () => {
           <div className="header__logo">
             <img width="38" src={LogoSvg} alt="Pizza logo" />
             <div>
-              <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <h1>Pizza React</h1>
+              <p>лучшая пицца в мире</p>
             </div>
           </div>
         </Link>
