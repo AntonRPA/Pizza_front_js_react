@@ -13,10 +13,10 @@ export const Search: React.FC = () => {
   const dispatch = useDispatch();
 
   //Очистка поискового input
-  const onClickClear = () => {
+  const onClickClear = (focus: boolean) => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current?.focus(); //"?" означает - Если есть current, то выполни focus
+    focus && inputRef.current?.focus(); //"?" означает - Если есть current, то выполни focus
   };
 
   /***Отложенный поиск(get запрос к бэкэнду) с паузой, после ввода слова */
@@ -40,7 +40,7 @@ export const Search: React.FC = () => {
 
   //Очистка поля поиска в случае смены категории
   useEffect(() => {
-    onClickClear();
+    onClickClear(false);
   }, [categoryId]);
 
   return (
@@ -92,7 +92,7 @@ export const Search: React.FC = () => {
       />
       {value && (
         <svg
-          onClick={() => onClickClear()}
+          onClick={() => onClickClear(true)}
           className={styles.clearIcon}
           height="48"
           viewBox="0 0 48 48"
