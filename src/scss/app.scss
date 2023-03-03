@@ -183,7 +183,8 @@ body {
   }
 
   .content__items {
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   &__item {
@@ -194,15 +195,25 @@ body {
     margin-top: 30px;
 
     //добавил
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: center;
+    &-pizza {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    @media (max-width: 800px) {
+      &-pizza {
+        display: flex;
+        flex: 0 1 250px;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+      }
     }
 
     &-img {
       display: flex;
       align-items: center;
-      margin-right: 15px;
+      margin-right: 60px;
       width: 10%;
 
       img {
@@ -215,7 +226,9 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       width: 40%;
+      flex-grow: 1;
 
       h3 {
         font-weight: bold;
@@ -230,13 +243,43 @@ body {
       }
     }
 
-    &-count {
+    //Добавил
+    &-pizza_param {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
+      margin-left: 30px;
+    }
+
+    @media (max-width: 500px) {
+      &-pizza_param {
+        display: flex;
+        flex: 5 1 170px;
+        margin: 0;
+        flex-direction: column;
+        align-content: center;
+        justify-content: space-between;
+        // width: 100%;
+      }
+
+      &-count {
+        padding-top: 20px;
+      }
+
+      &-remove {
+        padding-bottom: 20px;
+      }
+    }
+
+    &-count {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 13%;
 
       &-minus {
+        margin-right: 10px;
         svg {
           path:first-of-type {
             display: none;
@@ -265,6 +308,10 @@ body {
         }
       }
 
+      &-plus {
+        margin-left: 10px;
+      }
+
       b {
         font-size: 22px;
       }
@@ -272,9 +319,10 @@ body {
 
     &-price {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       justify-content: center;
-      width: 33%;
+      width: 100%;
 
       b {
         font-weight: bold;
@@ -287,7 +335,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      width: 4%;
+      // width: 4%;
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);

@@ -33,9 +33,21 @@ const FullPizza: React.FunctionComponent = () => {
 
   return (
     <div className="container">
-      <div className="pizza-block">
-        <img src={pizza.imageUrl} alt="" />
+      <div className="full_pizza">
+        <img className="full_pizza-imgfull" src={pizza.imageUrl} alt="" />
         <h2>{pizza.title}</h2>
+        <h3>Состав продукта:</h3>
+        <ul className="full_pizza-ul">
+          <li>
+            <b>Сыр:</b> Пармезан
+          </li>
+          <li>
+            <b>Мука:</b> Первый сорт
+          </li>
+          <li>
+            <b>Специи:</b> Черный перец
+          </li>
+        </ul>
         {/* <h4>{pizza.price} ₽</h4> */}
 
         <PizzaBlock {...pizza} key={pizza.id} fullLoad={false} />
