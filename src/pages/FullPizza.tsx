@@ -35,40 +35,41 @@ const FullPizza: React.FunctionComponent = () => {
     <div className="container">
       <div className="full_pizza">
         <img className="full_pizza-imgfull" src={pizza.imageUrl} alt="" />
-        <h2>{pizza.title}</h2>
-        <h3>Состав продукта:</h3>
-        <ul className="full_pizza-ul">
-          <li>
-            <b>Сыр:</b> Пармезан
-          </li>
-          <li>
-            <b>Мука:</b> Первый сорт
-          </li>
-          <li>
-            <b>Специи:</b> Черный перец
-          </li>
-        </ul>
-        {/* <h4>{pizza.price} ₽</h4> */}
+        <div className="full_pizza__info">
+          <h2>{pizza.title}</h2>
+          <h3>Состав продукта:</h3>
+          <ul className="full_pizza-ul">
+            <li>
+              <b>Сыр:</b> Пармезан
+            </li>
+            <li>
+              <b>Мука:</b> Первый сорт
+            </li>
+            <li>
+              <b>Специи:</b> Черный перец
+            </li>
+          </ul>
+          {/* <h4>{pizza.price} ₽</h4> */}
+          <PizzaBlock {...pizza} key={pizza.id} fullLoad={false} />
 
-        <PizzaBlock {...pizza} key={pizza.id} fullLoad={false} />
-
-        <div className="cart__bottom-buttons">
-          <Link to={indexUrl} className="button button--outline button--add go-back-btn">
-            <svg
-              width="8"
-              height="14"
-              viewBox="0 0 8 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M7 13L1 6.93015L6.86175 1"
-                stroke="#D3D3D3"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"></path>
-            </svg>
-            <span>Вернуться назад</span>
-          </Link>
+          <div className="cart__bottom-buttons">
+            <Link to={indexUrl} className="button button--outline button--add go-back-btn">
+              <svg
+                width="8"
+                height="14"
+                viewBox="0 0 8 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7 13L1 6.93015L6.86175 1"
+                  stroke="#D3D3D3"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"></path>
+              </svg>
+              <span>Вернуться назад</span>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
