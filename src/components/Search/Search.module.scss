@@ -2,6 +2,14 @@
   position: relative;
   margin: 0 20px;
   // left: -120px;
+  //добавил
+  @media (max-width: 600px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 900px) {
+    margin-top: 25px;
+  }
 }
 
 .input {
@@ -13,7 +21,6 @@
   font-size: 16px;
   transition: all 0.15s ease-in-out;
 
-  //добавил
   @media (max-width: 600px) {
     width: 300px;
   }
