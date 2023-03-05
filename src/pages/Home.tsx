@@ -103,6 +103,7 @@ const Home: React.FC = () => {
   // Фильтрация пицц на фронте
   // .filter((obj) => obj.title.toLowerCase().includes(searchValue.toLowerCase()))
   const pizzas = items.map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
+  const pagination = <Pagination currentPage={currentPage} onChangePage={onChangePage} />;
 
   return (
     <div className="container">
@@ -111,24 +112,33 @@ const Home: React.FC = () => {
         <Sort sort={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
+      <div>
         {status === 'error' ? (
           <div className="content__error-info">
             <h2>Произошла ошибка 😕</h2>
             <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
           </div>
         ) : status === 'not_found' ? (
-          <div className="content__error-info">
-            <h2>Пицц не найдено 😕</h2>
-            <p>К сожалению, не удалось найти пиццы. Попробуйте другой запрос</p>
-          </div>
+          <>
+            <div className="content__error-info">
+              <h2>Пицц не найдено 😕</h2>
+              <p>К сожалению, не удалось найти пиццы. Попробуйте другой запрос</p>
+            </div>
+            {pagination}
+          </>
         ) : status === 'loading' ? (
-          [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+          <div className="content__items">
+            {[...new Array(6)].map((_, index) => (
+              <Skeleton key={index} />
+            ))}
+          </div>
         ) : (
-          pizzas
+          <>
+            <div className="content__items">{pizzas}</div>
+            {pagination}
+          </>
         )}
       </div>
-      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
 };

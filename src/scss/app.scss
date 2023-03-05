@@ -25,15 +25,16 @@ body {
   padding: 40px 0;
 
   &__error-info {
-    grid-template-columns: repeat(1, 1fr);
     margin: 100px auto;
-    width: 500px;
+    max-width: 500px;
     text-align: center;
+    // padding: 100px 0px;
 
     h2 {
       font-size: 32px;
       font-weight: 700;
       margin-bottom: 10px;
+      line-height: 110%;
     }
 
     p {
@@ -557,13 +558,14 @@ body {
 
   &--empty {
     margin: 30px auto;
-    width: 600px;
+    width: 0 auto;
     text-align: center;
 
     h2 {
       font-size: 36px;
       font-weight: 700px;
       margin-bottom: 15px;
+      line-height: 110%;
     }
 
     p {
@@ -580,13 +582,15 @@ body {
 
     img {
       display: block;
-      width: 300px;
+      max-width: 300px;
+      width: 100%;
       margin: 45px auto 60px;
     }
 
     .button--black {
-      padding: 12px 0 14px;
-      width: 230px;
+      padding: 10px;
+      max-width: 230px;
+      width: 100%;
       margin: 0 auto;
       font-weight: 600;
       font-size: 18px;

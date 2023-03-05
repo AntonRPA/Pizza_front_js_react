@@ -15,12 +15,12 @@ type TSortPopup = {
 };
 
 export const sortList: TsortItem[] = [
-  { name: 'популярности (убыв.)', sortProperty: SortPropertyEnum.RATING_DESC },
-  { name: 'популярности (возвр.)', sortProperty: SortPropertyEnum.RATING_ASC },
-  { name: 'цене (убыв.)', sortProperty: SortPropertyEnum.PRICE_DESC },
-  { name: 'цене (возвр.)', sortProperty: SortPropertyEnum.PRICE_ASC },
-  { name: 'алфавиту (убыв.)', sortProperty: SortPropertyEnum.TITLE_DESC },
-  { name: 'алфавиту (возвр.)', sortProperty: SortPropertyEnum.TITLE_ASC },
+  { name: 'популярности (убыв)', sortProperty: SortPropertyEnum.RATING_DESC },
+  { name: 'популярности (возвр)', sortProperty: SortPropertyEnum.RATING_ASC },
+  { name: 'цене (убыв)', sortProperty: SortPropertyEnum.PRICE_DESC },
+  { name: 'цене (возвр)', sortProperty: SortPropertyEnum.PRICE_ASC },
+  { name: 'алфавиту (убыв)', sortProperty: SortPropertyEnum.TITLE_DESC },
+  { name: 'алфавиту (возвр)', sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
 export const Sort: React.FC<TSortPopup> = React.memo(({ sort }) => {
