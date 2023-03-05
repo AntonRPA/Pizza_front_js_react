@@ -237,13 +237,11 @@ body {
         font-size: 22px;
         line-height: 27px;
         letter-spacing: 0.01em;
-        text-align: center;
       }
 
       p {
         font-size: 18px;
         color: #8d8d8d;
-        text-align: center;
       }
     }
 
@@ -279,6 +277,11 @@ body {
           font-size: 22px;
           line-height: 27px;
           letter-spacing: 0.01em;
+          text-align: center;
+        }
+
+        p {
+          text-align: center;
         }
       }
     }
@@ -323,6 +326,11 @@ body {
           font-size: 20px;
           line-height: 27px;
           letter-spacing: 0.01em;
+          text-align: center;
+        }
+
+        p {
+          text-align: center;
         }
       }
     }
