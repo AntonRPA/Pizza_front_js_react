@@ -260,6 +260,7 @@ body {
         margin-left: 15px;
         width: 50%;
         text-align: center;
+        white-space: nowrap;
         // margin-left: 20px;
       }
 
@@ -310,6 +311,7 @@ body {
         order: -1;
         padding-top: 20px;
         width: 50%;
+        white-space: nowrap;
       }
 
       &-info {
@@ -323,8 +325,8 @@ body {
         flex: 1 0;
 
         h3 {
-          font-weight: bold;
-          font-size: 20px;
+          font-weight: 600;
+          font-size: 22px;
           line-height: 27px;
           letter-spacing: 0.01em;
           text-align: center;
@@ -340,7 +342,7 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 13%;
+      width: 0 auto;
 
       &-minus {
         margin-right: 10px;
@@ -386,7 +388,8 @@ body {
       flex-grow: 1;
       align-items: center;
       justify-content: center;
-      width: 100%;
+      width: 0 auto;
+      white-space: nowrap;
 
       b {
         font-weight: bold;
@@ -441,6 +444,7 @@ body {
         &:last-of-type {
           b {
             color: $orange;
+            white-space: nowrap;
           }
         }
       }
@@ -496,10 +500,17 @@ body {
         display: flex;
         justify-content: space-between;
 
+        // span:first-child {
+        //   white-space: nowrap;
+        // }
+
         span {
           font-size: 20px;
           margin-left: 20px;
 
+          b {
+            white-space: nowrap;
+          }
           &:last-of-type {
             b {
               color: $orange;
